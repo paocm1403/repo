@@ -33,8 +33,9 @@ k-fold CV method:
 • For each k:
 1) estimate the model on the Training set: all data except the k-th fold
 2) calculate CV MSE in the test set
+
 MSEk = 1/nk Σ i∈Dk(ŷi − yi)².
-• The final CV MSE estimate is the simply MSE=1/K Σ MSEk
+• The final CV MSE = 1/K Σ MSEk
 
 Validation Set approach --> err estimates can be highly Variable and often Upward-biased, as model is fitted on reduced training sample
 LOOCV --> error estimates are almost unbiased but very high variability, since the n training sets used at each iteration differ by only 1 ob, SO strongly correlated
@@ -47,8 +48,11 @@ Z = sample of size n
 Z*₍ᵦ₎ (for b = 1, …, B) = bootstrap samples  
 by drawing n observations with replacement from Z.
 
-Err_boot = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
-with MSE(OOBᵦ) = (1/|I∖Iᵦ|) ∑ᵢ∈ᴵ∖ᴵᵦ (yᵢ − f*ᵦ(xᵢ))²
+Bootstrap prediction error = (1/B) ∑ᵦ₌₁ᴮ∑_{i∈ I\Iᵦ} [(1/|I\Iᵦ|)·(yᵢ − f*ᵦ(xᵢ))²]
+
+MSE(OOBᵦ) = (1/|I∖Iᵦ|)ᴮ∑_{i∈ I\Iᵦ} (yᵢ − f*ᵦ(xᵢ))²
+• The final Boot MSE = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
+
 
 where:
 xᵢ is the predictor vector for obs i,
