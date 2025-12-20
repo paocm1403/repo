@@ -47,7 +47,8 @@ Z = sample of size n
 Z*₍ᵦ₎ (for b = 1, …, B) = bootstrap samples  
 by drawing n observations with replacement from Z.
 
-Bootstrap prediction error = (1/B) ∑ᵦ₌₁ᴮ∑_{i∈ I\Iᵦ} [(1/|I\Iᵦ|)·(yᵢ − f*ᵦ(xᵢ))²]
+Err_boot = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
+with MSE(OOBᵦ) = (1/|I∖Iᵦ|) ∑ᵢ∈ᴵ∖ᴵᵦ (yᵢ − f*ᵦ(xᵢ))²
 
 where:
 xᵢ is the predictor vector for obs i,
