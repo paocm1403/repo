@@ -1,19 +1,22 @@
+# Flexible modelling 
+# --> PRO: better capturing Causal relationship under investigation. 
+# ok when suspects that underlying relationship is highly JAGGED or/and IRREDUCIBLE ERROR is substantial.
+# --> CONS: less interpretable and needs large n to be reliable. 
+
 
 #• n extremely large, p is small --> Flex
-#• p extremely large, n is small--> Infl
+#• p extremely large, n is small--> Inflex
 #• relationship X/Y is highly non-linear --> Flex
 #• Var(ϵ) is extremely high --> Flex
 
-# Flexible modelling --> adv of better capturing Causal relationship under investigation. 
-# But, less interpretable and needs large n to be reliable. 
-# ok when suspects that underlying relationship is highly JAGGED or/and irreducible err is substantial.
-# Appropriate degree of flexibility
+
+# Appropriate degree of flexibility  TRADE-OFF:
 # --> estimation Bias decreases as model flexibility increases, 
 # --> but, estimation Variance tends to increase.
 
 Parametric method summarizes the Causal relationship Y / X
 funct f is usually Linear in the parameters β₀, β₁, …, β_p
-are estimated via OLS!!! provided that n > p and the residual variance is constant.
+are estimated via OLS!!! --> provided that n > p and HOMOSCEDASTICITY (residual variance is constant).
 The funct f may be NON-linear in X, including quadratic, cubic, or higher-order terms of one or more X variables. 
 Also, can incorporate Interaction Terms, X of the form X_k′ X_k″ etc
 
