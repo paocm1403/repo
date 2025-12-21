@@ -34,8 +34,8 @@ k-fold CV method:
 1) estimate the model on the Training set: all data except the k-th fold
 2) calculate CV MSE in the test set
 
-MSEk = 1/nk Σ i∈Dk(ŷi − yi)².
-• The final CV MSE = 1/K Σ MSEk
+MSEₖ = 1/nk Σ i∈ Dₖ (ŷᵢ − yᵢ)².
+• The final CV MSE = 1/K Σ MSEₖ
 
 Validation Set approach --> err estimates can be highly Variable and often Upward-biased, as model is fitted on reduced training sample
 LOOCV --> error estimates are almost unbiased but very high variability, since the n training sets used at each iteration differ by only 1 ob, SO strongly correlated
@@ -48,9 +48,8 @@ Z = sample of size n
 Z*₍ᵦ₎ (for b = 1, …, B) = bootstrap samples  
 by drawing n observations with replacement from Z.
 
-Bootstrap prediction error = (1/B) ∑ᵦ₌₁ᴮ∑_{i∈ I\Iᵦ} [(1/|I\Iᵦ|)·(yᵢ − f*ᵦ(xᵢ))²]
 
-MSE(OOBᵦ) = (1/|I∖Iᵦ|)ᴮ∑_{i∈ I\Iᵦ} (yᵢ − f*ᵦ(xᵢ))²
+MSE(OOBᵦ) = (1/|I∖Iᵦ|) ∑ i∈ I\Iᵦ (yᵢ − f*ᵦ(xᵢ))²
 • The final Boot MSE = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
 
 
@@ -71,34 +70,34 @@ PCA not used to model or predict a target variable
 So, appropriateness of the chosen dim is subjective
 
 ##
-PCs of x₁, x₂, …, xp  === zₘ (for m = 1, …, p) 
+PCs of x₁, x₂, …, xₚ  === zₘ (for m = 1, …, p) 
 such that
-zᵢₘ = ϕ₁ₘ xᵢ₁ + ϕ₂ₘ xᵢ₂ + … + ϕ_pₘ xᵢ_p
+zᵢₘ = ϕ₁ₘ xᵢ₁ + ϕ₂ₘ xᵢ₂ + … + ϕₚₘ xᵢₚ
 with constraint ∑ⱼ₌₁ᵖ ϕⱼₘ² = 1
-PCs are imposed to be uncorrelated, that is, with r(zm,zm′) = 0, for each m ̸= m′.
+PCs are imposed to be uncorrelated, that is, with ρ(zₘ, zₘ′) = 0 = 0, for each m  ̸= m′.
 
 ## PCs derivation
 Writing  m-th PC === zₘ = ϕₘ′ x
 where ϕₘ is a p-dim coeff vector and x is the p-dim data vector
 
 # --> Derivation of the first coefficient vector:
-   ϕ₁ = arg maxϕ V(ϕ′x) = ϕ′Sϕ
+   ϕ₁ = arg maxϕ V(ϕᵀx) = ϕᵀ S ϕ
 under the constraint ∥ϕ∥² = 1, where S is the sample covariance matrix.
 ---> Applying the Lagrange multiplier method, SOLUTION EQUATION is :
-  (S − λ₁ I_p) ϕ₁ = 0
+  (S − λ₁ Iₚ) ϕ₁ = 0
 --> this is solved if ϕ₁ is the first eigenvector of S, and λ₁ is the first eigenvalue of S. That is:
-  z₁ = ϕ₁′ x
+  z₁ = ϕ₁ᵀ x
 --> In addition, from equation, we derive
-  V(z₁) = λ₁ ϕ₁′ϕ₁ = λ₁
+  V(z₁) = λ₁ ϕ₁ᵀ ϕ₁ = λ₁
 
 # --> SO, Derivation of the second coefficient vector:
-   ϕ2 = arg maxϕ V(ϕ′x) = ϕ′Sϕ
+   ϕ₂ = arg maxϕ V(ϕᵀx) = ϕᵀ S ϕ
 under the constraint ∥ϕ₂∥² = 1  and ρ(z₂, z₁) = 0
---> Since COV(z₂, z₁) = ϕ₂′ S ϕ₁ = λ₁ ϕ₂′ϕ₁ =0,  IF AND ONLY IF   ϕ₂′ϕ₁ = 0  by the Lagrange multiplier method the solution equation is
-    (S − λ₂ I_p) ϕ₂ = 0 
-   with ϕ₂′ϕ₁ = 0 and ϕ₂′ϕ₂ = 1
+--> Since COV(z₂, z₁) = ϕ₂ᵀ S ϕ₁ = λ₁ ϕ₂ᵀϕ₁ = 0,IF AND ONLY IF ϕ₂ᵀϕ₁ = 0  by the Lagrange multiplier method the solution equation is
+   (S − λ₂ Iₚ) ϕ₂ = 0
+   with ϕ₂ᵀϕ₁ = 0 and ϕ₂ᵀϕ₂ = 1
 --> Equation is solved if ϕ₂ is the second eigenvector of S and λ₂ is the second eigenvalue of S.
-   V(z₂) = λ₂ ϕ₂′ϕ₂ = λ₂
+   V(z₂) = λ₂ ϕ₂ᵀ ϕ₂ = λ₂
 
 In the end, for m = 3, …, p, the coeff vector ϕₘ is the m-th eigenvector of S, and λₘ is its corresponding eigenvalue, with V(zₘ) = λₘ.
 SO,as a consequence, the PCs zₘ, for m = 1, …, p, are uncorrelated linear combinations of the p, with the max variance possible for each m.
@@ -131,7 +130,7 @@ while simultaneously capturing as much of the variability in X as possible.
 Once the data have been standardized, 
 --> 1^ direction coeffs ϕ₁m === derived from Univariate regr coeffs of y on each x
 with residual vectors ϵⱼ₁ (j = 1, …, p)
-representing the portions of y not explained by the first PLS component z₁ = ϕ₁′ x
+representing the portions of y not explained by the first PLS component z₁ = ϕ₁ᵀ x
 --> 2^ direction coeffs ϕ₂m are then derived by regressing y on each of Orthogonalized residual vectors ϵⱼ₁.
 --> same procedure can be iteratively repeated for m = 3, …, p.
 -------> Once the latent components z₁, …, zₘ have been extracted --> Y is regressed on the M components !
