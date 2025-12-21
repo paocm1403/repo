@@ -106,7 +106,7 @@ SO,as a consequence, the PCs zₘ, for m = 1, …, p, are uncorrelated linear co
 
 ##
 There are 3 criteria for  M ≪ p number of PCs:
-1) choose the smallest M for which the proportion of Explained Variance (∑ⱼ₌₁ᴹ λⱼ)/tr(S) exceeds 70-80%.
+1) Choose the smallest M for which the proportion of Explained Variance (∑ⱼ₌₁ᴹ λⱼ)/tr(S) ≥ 70-80%.
 2) Kaiser rule: if the variables are standardized --> tr(S) = p --> THEN, choose the smallest M such that λₘ > 1
 3) Choose M visually, using the scree plot of ordered eigenvalues.
 
@@ -124,7 +124,7 @@ As a result, the M artificial predictors, may not be strongly associated with Y.
 
 #####
 PLS = another, dim-red method for regression problems with a large p. 
-Unlike PCR, PLS constructs linear combinations x₁, …, x_p 
+Unlike PCR, PLS constructs linear combinations x₁, …, xₚ 
 that iteratively max their cov with y, 
 while simultaneously capturing as much of the variability in X as possible.
 
