@@ -61,23 +61,24 @@ Unbiased because each prediction is evaluated only on OOB obs
 
 #####
 PCA represents a p × 1 vector of real variables x
-by an r × 1 vector of artificial- uncorrelated variables z
-where z is a linear combination of x  and r ≪ p
+by an M × 1 vector of artificial- uncorrelated variables z
+where z is a linear combination of x  and M ≪ p
 No y involved --> unsupervised
 
-PCA used to produce a more interpretable, low-dim Representation of a high-dim data vector not feasible with a standard scatterplot matrix in large dim
+PCA used to produce a more interpretable, low-dim Representation of a high-dim data vector 
+not feasible with a standard scatterplot matrix in large dims
 PCA not used to model or predict a target variable
-So, appropriateness of the chosen dim is subjective
+So, appropriateness of the chosen M is subjective
 
 ##
-PCs of x₁, x₂, …, xₚ  === zₘ (for m = 1, …, p) 
+PCs of x₁, x₂, …, xₚ  formally are zₘ = (z₁ₘ, z₂ₘ, …, zₙₘ)ᵀ
 such that
 zᵢₘ = ϕ₁ₘ xᵢ₁ + ϕ₂ₘ xᵢ₂ + … + ϕₚₘ xᵢₚ
-with constraint ∑ⱼ₌₁ᵖ ϕⱼₘ² = 1
-PCs are imposed to be uncorrelated, that is, with ρ(zₘ, zₘ′) = 0 = 0, for each m  ̸= m′.
+with constraint ∑ⱼ₌₁ᵖ ϕ²ⱼₘ = 1
+PCs are imposed to be uncorrelated, that is, with ρ(zₘ, zₘ′) = 0 , for each m ≠ m′.
 
 ## PCs derivation
-Writing  m-th PC === zₘ = ϕₘ′ x
+Writing  m-th PC === zᵢₘ = ϕᵀₘ xᵢ
 where ϕₘ is a p-dim coeff vector and x is the p-dim data vector
 
 # --> Derivation of the first coefficient vector:
