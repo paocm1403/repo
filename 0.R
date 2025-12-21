@@ -74,11 +74,9 @@ So, appropriateness of the chosen M is subjective
 PCs of x₁, x₂, …, xₚ  formally are zₘ = (z₁ₘ, z₂ₘ, …, zₙₘ)ᵀ
 such that
 zᵢₘ = ϕ₁ₘ xᵢ₁ + ϕ₂ₘ xᵢ₂ + … + ϕₚₘ xᵢₚ
-with constraint ∑ⱼ₌₁ᵖ ϕ²ⱼₘ = 1
-PCs are imposed to be uncorrelated, that is, with ρ(zₘ, zₘ′) = 0 , for each m ≠ m′.
+with constraint ∑ⱼ₌₁ᵖ ϕ²ⱼₘ = 1 and  ρ(zₘ, zₘ′) = 0 , for each m ≠ m′.
 
-## PCs derivation
-Writing  m-th PC === zᵢₘ = ϕᵀₘ xᵢ
+        m-th PC === zᵢₘ = ϕᵀₘ xᵢ
 where ϕₘ is a p-dim coeff vector and x is the p-dim data vector
 
 # --> Derivation of the first coefficient vector:
