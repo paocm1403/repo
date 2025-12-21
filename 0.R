@@ -34,8 +34,8 @@ k-fold CV method:
 1) estimate the model on the Training set: all data except the k-th fold
 2) calculate CV MSE in the test set
 
-MSEₖ = 1/nk Σ i∈ Dₖ (ŷᵢ − yᵢ)².
-• The final CV MSE = 1/K Σ MSEₖ
+MSEₖ = 1/nₖ Σ i∈ Dₖ (ŷᵢ − yᵢ)².
+• Final CV MSE = 1/K Σ MSEₖ
 
 Validation Set approach --> err estimates can be highly Variable and often Upward-biased, as model is fitted on reduced training sample
 LOOCV --> error estimates are almost unbiased but very high variability, since the n training sets used at each iteration differ by only 1 ob, SO strongly correlated
@@ -50,7 +50,7 @@ by drawing n observations with replacement from Z.
 
 
 MSE(OOBᵦ) = (1/|I∖Iᵦ|) ∑ i∈ I\Iᵦ (yᵢ − f*ᵦ(xᵢ))²
-• The final Boot MSE = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
+• Final Bootstrap MSE = (1/B) ∑ᵦ₌₁ᴮ MSE(OOBᵦ) 
 
 
 where:
@@ -81,19 +81,20 @@ Writing  m-th PC === zₘ = ϕₘ′ x
 where ϕₘ is a p-dim coeff vector and x is the p-dim data vector
 
 # --> Derivation of the first coefficient vector:
-   ϕ₁ = arg maxϕ V(ϕᵀx) = ϕᵀ S ϕ
+   ϕ₁ = arg max V(ϕᵀx) = arg max  ϕᵀ S ϕ
 under the constraint ∥ϕ∥² = 1, where S is the sample covariance matrix.
 ---> Applying the Lagrange multiplier method, SOLUTION EQUATION is :
   (S − λ₁ Iₚ) ϕ₁ = 0
---> this is solved if ϕ₁ is the first eigenvector of S, and λ₁ is the first eigenvalue of S. That is:
+--> Equation is solved if ϕ₁ is the first eigenvector of S, and λ₁ is the first eigenvalue of S. That is:
   z₁ = ϕ₁ᵀ x
 --> In addition, from equation, we derive
   V(z₁) = λ₁ ϕ₁ᵀ ϕ₁ = λ₁
 
 # --> SO, Derivation of the second coefficient vector:
-   ϕ₂ = arg maxϕ V(ϕᵀx) = ϕᵀ S ϕ
-under the constraint ∥ϕ₂∥² = 1  and ρ(z₂, z₁) = 0
---> Since COV(z₂, z₁) = ϕ₂ᵀ S ϕ₁ = λ₁ ϕ₂ᵀϕ₁ = 0,IF AND ONLY IF ϕ₂ᵀϕ₁ = 0  by the Lagrange multiplier method the solution equation is
+   ϕ₂ = arg max V(ϕᵀx) = arg max  ϕᵀ S ϕ
+under the constraint ∥ϕ∥² = 1  and ρ(z₂, z₁) = 0
+--> Since COV(z₂, z₁) = ϕ₂ᵀ S ϕ₁ = λ₁ ϕ₂ᵀϕ₁ = 0 ,IF AND ONLY IF ϕ₂ᵀϕ₁ = 0
+--> Applying the Lagrange multiplier method, SOLUTION EQUATION is :
    (S − λ₂ Iₚ) ϕ₂ = 0
    with ϕ₂ᵀϕ₁ = 0 and ϕ₂ᵀϕ₂ = 1
 --> Equation is solved if ϕ₂ is the second eigenvector of S and λ₂ is the second eigenvalue of S.
