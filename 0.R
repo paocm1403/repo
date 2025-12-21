@@ -107,7 +107,7 @@ SO,as a consequence, the PCs zₘ, for m = 1, …, p, are uncorrelated linear co
 There are 3 criteria for  M ≪ p number of PCs:
 1) Choose the smallest M for which the proportion of Explained Variance (∑ⱼ₌₁ᴹ λⱼ)/tr(S) ≥ 70-80%.
 2) Kaiser rule: if the variables are standardized --> tr(S) = p --> THEN, choose the smallest M such that λₘ > 1
-3) Choose M visually, using the scree plot of ordered eigenvalues.
+3) Choose M visually, using the scree plot of ordered eigenvalues λ
 
 It is advisable to standardize the variables whenever they have different scales, 
 BUT if the scale is the same, standardization may be avoided
@@ -122,23 +122,26 @@ Only capture maximum variance in X
 As a result, the M artificial predictors, may not be strongly associated with Y.
 
 #####
-PLS = another, dim-red method for regression problems with a large p. 
-Unlike PCR, PLS constructs linear combinations x₁, …, xₚ 
-that iteratively max their cov with y, 
-while simultaneously capturing as much of the variability in X as possible.
+PLS = another, dim-red method for regressions with a large p. 
+Unlike PCR, PLS constructs linear combinations of x₁, …, xₚ that
+- iteratively MAX their COV with Y, 
+- but also, capturing as much MAX variability in X as possible.
 
-Once the data have been standardized, 
---> 1^ direction coeffs ϕ₁m === derived from Univariate regr coeffs of y on each x
-with residual vectors ϵⱼ₁ (j = 1, …, p)
-representing the portions of y not explained by the first PLS component z₁ = ϕ₁ᵀ x
---> 2^ direction coeffs ϕ₂m are then derived by regressing y on each of Orthogonalized residual vectors ϵⱼ₁.
---> same procedure can be iteratively repeated for m = 3, …, p.
--------> Once the latent components z₁, …, zₘ have been extracted --> Y is regressed on the M components !
+Once the data have been Standardized, 
+--> First coeffs vector ϕ₁ === is derived from Univariate regr coeffs of y on each x
+The predictors are then deflated 
+by removing the information explained by z₁, 
+yielding Residual orthogonalized predictor vectors ϵⱼ₁ (j = 1, …, p), 
+which represent the portions of the predictors not explained by the first PLS component z₁ = ϕ₁ᵀ x
+--> Second coeffs vector ϕ₂ === obtained maximizing cov between y and these deflated predictors.
+--> Iteratively repeated for m = 3, …, p.
+
+!!! Once the latent components z₁, …, zₘ have been extracted --> Y is regressed on the M components!!!
 Optimal M is selected using CV (using y to supervise the choice)
 
 
 ###   PLS ≠ PCR : 
-In PLS latent directions constructed for max association between y and X.
+In PLS vectors are constructed for max association between y and X.
 Result --> M, in PLS tends to be more parsimonious than PCR, typically requiring fewer components to adequately capture y.
 But, performance of the 2 methods is often similar, since the var effect usually controls the cov effect
 
@@ -152,9 +155,11 @@ f is an m × 1 vector of factor scores,
 u is a p × 1 vector of residuals.
 Assumptions:
 1) factors: have zero mean, are uncorrelated, have unit variance
-E(f) = 0 and V(f) = E(ff′) = Iₘ.
+E(f) = 0 
+V(f) = E(ff′) = Iₘ
 2) residuals: have zero mean, are uncorrelated with the factors, have variable-specific variances
-E(u) = 0, COV(u, f) = E(uf′) = 0, V(u) = E(uu′) = Ψ,   where Ψ is a diagonal matrix.
+E(u) = 0, COV(u, f) = E(uf′) = 0
+V(u) = E(uu′) = Ψ,   where Ψ is a diagonal matrix.
 
 Under Assumptions, covariance matrix = Σ = ΛΛ′ + Ψ so it decomposes 
 into the sum of a low-rank matrix ΛΛ′, capturing the common variation explained by the factors, 
