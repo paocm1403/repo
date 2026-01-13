@@ -1,7 +1,7 @@
 function
 ###
-SURVEY SAMPLING = selecting a subset of individuals or units from a larger population to DRAW CONCLUSIONS ABOUT POPULATION ( that is INFERENCE)
-Survey sampling relies on principles of probability to ensure every unit has a known chance of selection. 
+SURVEY SAMPLING = selecting a subset of units from a larger population to DRAW CONCLUSIONS ABOUT POPULATION ( so, purpose is INFERENCE)
+Survey sampling relies on probability to ensure every unit has a known chance of selection. 
 Sampling theory provides formulas and principles to estimate population characteristics (such as means, totals, proportions) from sample data and to assess the uncertainty (variance) of these estimates with known CI.
 -	It is alternative to a full census, saving time and cost--> still yielding useful information. 
 -	key idea is to use random selection so that the sample is REPRESENTATIVE of the population and free of SELECTION BIAS. 
@@ -9,182 +9,200 @@ Sampling theory provides formulas and principles to estimate population characte
 -	Other errors like MEASUREMENT error (= inaccuracies in data collection, so is often systematic as, poorly worded questions, respondent misreporting, interviewer effects, recall bias) 
 + nonresponse error (missing data from some units) are NON-SAMPLING ERRORS (must be minimized)
 
---Population =  entire set of units under study. 
+--Population =  entire set of units under study
 --Sample = subset of units actually selected from the population. A well-designed sample aims to mirror the population’s characteristics, on average.
---Sampling Frame = actual database of units from which the sample is actually drawn. It is a concrete representation of the target population, such as a census, household listing. So it is an implicit scheme for generating units because 
-It is used before sampling to assign known probabilities of selection. BUT, It may differ from the target population because of coverage errors (missing units, duplicates, or outdated information) A good frame should cover the target population completely; 
---Sampling Unit =  basic element or collection of elements. In a simple design, the sampling units might be individual persons. In a multi-stage design, the primary sampling unit (PSU) could be a group like a city block or school, and secondary units (SSU) might be students within those PSUs
+--Sampling Frame = actual database of units from which the sample is actually drawn. It is a concrete representation of the target population, such as a census, household listing. So it is an implicit scheme for generating units! It is used before sampling to assign known probabilities of selection. 
+BUT, It may differ from the target population because of COVERAGE ERRORS (missing units, duplicates, or outdated information), BUT, A good frame should cover the target population completely
+--Sampling Unit =  basic element or collection of elements. In a simple design, the sampling units might be individual persons. In a multi-stage design, the primary sampling unit (PSU) could be a group like a city block or school and secondary units (SSU) might be students within those PSUs
 --Parameter vs Statistic:  PARAMETER = numerical characteristic of the population (usually unknown, e.g. the true population mean income). STATISTIC = numerical characteristic of the sample (e.g. the sample mean income). So, WE USE SAMPLE STATISTICS TO ESTIMATE POPULATION PARAMETERS
---Estimator and Estimate: ESTIMATOR = formula for calculating an estimate of a population parameter from sample data. For instance, the sample mean formula is an estimator of the population mean μ. ESTIMATE = the actual numerical value obtained from sample (e.g. y_bar= 52 kg as an estimate of the true mean).
---Probability Sampling: Each unit in the population has a known, non-zero probability of selection. crucial for unbiased inference! Random sampling methods (SRS, SYS, STS, CS, etc.) are probability sampling designs.
+--Estimator and Estimate: ESTIMATOR = formula for calculating an estimate of a population parameter from sample data. For instance, the sample mean formula is an estimator of the population mean "mu". ESTIMATE = the actual numerical value obtained from sample (e.g. y_bar= 52 kg is an estimate of the true mean).
+--Probability Sampling: Each unit in the population has a known, non-zero probability of selection... crucial for unbiased inference! Random sampling methods (SRS, SYS, STS, CS, etc.) are probability sampling designs.
 --Non-Probability Sampling:  No mathematic foundation. Lack theoretical foundation and reliability of probability sampling. We can validate these methods only if we have results for the full population! (Examples: Convenience sampling, Judgment sampling, Haphazard sampling, Purposing sampling, Volunteer-based sampling)
 
---Inclusion Probability =  pi_i =  the probability that each unit is selected into the sample. For example, in SRS, pi_i= n/N, BUT, Inclusion probabilities may differ across units in designs with unequal selection chances!
---Unbiasedness: An estimator is unbiased if its EXPECTED VALUE = TRUE POPULATION PARAMETER. E(theta_hat) = theta. we can derive the expected values and variances of estimators using combinatorial probability. (for example, the sample mean from SRS is an unbiased estimator of the population mean)
---Sampling Distribution: refers to the probability distribution of a statistic over all possible random samples! As n grows, the Central Limit Theorem often guarantees that the sampling distribution of many estimators (like the sample mean or proportion) approaches a normal distribution, facilitating CI construction.
+--Inclusion Probability =  pi_i =  the probability that each unit is selected into the sample! For example, in SRS, pi_i= n/N, BUT, Inclusion probabilities may differ across units in designs with unequal selection chances!
+--Unbiasedness: An estimator is unbiased if its EXPECTED VALUE = TRUE POPULATION PARAMETER! E(theta_hat) = theta --> we can derive the expected values and variances of estimators using combinatorial probability. (for example, the sample mean from SRS is an unbiased estimator of the population mean)
+--Sampling Distribution: refers to the probability distribution of a statistic over all possible random samples! 
+  As n grows, the CLT often guarantees that the sampling distribution of many estimators (like the sample mean or proportion) approaches a normal distribution, facilitating CIs construction.
 
-MCAR --> Missing completely at random --> Deletion, simple imputation
-MAR  -->  Missing depends on observed data --> Weighting, imputation
-MNAR --> Missing depends on unobserved data --> Very difficult requires models or external info
+MCAR --> Missing completely at random --> deletion, simple imputation
+MAR  -->  Missing depends on observed data --> weighting adjustments, imputation
+MNAR --> Missing depends on unobserved data --> very difficult requires models or external info
 NON-RESPONSE Unit vs Item 
 UNIT non-response = when a sampled unit does not participate the survey at all‼
 Consequences: missing information, n shrinks, selection bias if non-response is not random (e.g. only large firms respond), Ignoring = biased estimates !
 Solutions: 
 -	Non-response weights adjustments
 -	Post-stratification = adjust weights so that sample totals match known population totals for key variables (e.g. age, region, sector). But require knowing Population totals 
--	Ranking (calibration) = an extension of post-stratification using multiple margins simultaneously
+-	Ranking (calibration) = an extension of post-stratification using multiple margins simultaneously!
 -	PREVENTION = short questionnaires, incentives etc
 ITEM non-response = when a responding unit skips one or more specific questions. So, some variables are missing, while others are observed. Less severe than unit non-response, but still a potential source of bias.
 Solutions:
--	Deletion of the whole unit (often wrong‼)
--	Single imputation (Acceptable for descriptive analysis, not ideal for inference)
--	Multiple Imputation using statistical model (statistically valid under MAR)
--	Missing-data options (na.rm = TRUE for means)
+-	Deletion of the whole unit (very wrong method, can be used only in some MCAR case!!)
+-	Single imputation (acceptable for descriptive analysis, not suitable for inference)
+-	Multiple Imputation using statistical model (statistically valid under MAR)...ITEM non-response = when a responding unit skips one or more specific questions. So, some variables are missing, while others are observed. Less severe than unit non-response, but still a potential source of bias.
+Solutions:
+-	Deletion of the whole unit (very wrong method, can be used only in some MCAR case!!) 
+-	Single imputation (acceptable for descriptive analysis, not ideal for inference)
+-	Multiple Imputation using statistical model (statistically valid under MAR)..similarity between units can be defined using measures such as the Mahalanobis distance to preserve multivariate relationships!
+-	Keep missing-data options (na.rm = TRUE for means)...but valid only under MCAR and not appropriate for inferential analysis
 --------------------------------
 SAMPLE MEAN AND SAMPLE TOTAL (DEFINITIONSSS)
 -	Sample mean: y_bar = ∑ y_i/n
 -	Sample total: t = ∑ y_i
-For all SELF-WEIGHTING DESIGNSS:   mu_hat = y_bar and T_hat = N* y_bar
+For all SELF-WEIGHTING DESIGNSS:   mu_hat = y_bar and t_hat = N* y_bar
 
 VARIANCE OF THE MEAN AND STANDARD ERROR (DEFINITIONSS)
-Variance of an Estimator measures its dispersion over repeated samples. SE is the square root of the variance.
-For a SRS  WR (or very large population):      Var(ȳ) = S² / n
---Pop variance (S²): if the pop is very heterogeneous, sample means will vary a lot.
---Sample size (n): averaging over more obs reduces randomness. Each time the n increases, the sample mean decreases until zero (if ninfinite).
+Variance of an Estimator = its dispersion over repeated samples, SE = the square root of the variance
+For a SRS  WR (or very large population):      Var(y_bar) = S²/n
+--Pop variance (S²): if the pop is very heterogeneous, sample means will vary a lot
+--Sample size (n): averaging over more obs reduces randomness. Each time the n increases, the sample mean decreases until zero (if n tends to-->infinite)
 ------------------------------------
-FPC
-FPC adjusts variance estimates to account for sampling WOR from a finite population and is typically expressed as (N− n)/N or    Bessel -->  (N − n)/(N − 1) 
+FPC = (N−n)/N or with Bessel--> (N−n)/(N−1) 
+FPC adjusts variance estimates to account for sampling WOR from a finite population!  
 It is necessary when the sampling fraction n/N is non-negligible (rule of thumb: above 5%)
-In the formula Var(y_bar) = (S² / n) * (N− n)/N
-(N− n)/N  =(1 − n/N) = fpc ‼ It reflects the fact that sampling WOR from a finite population reduces uncertainty from WR case‼ As n grows, the pool of unknown units shrinks!  --> so the variance of sample mean decrease across repeated samples!
+In the formula Var(y_bar) = (S²/n) * (N−n)/N
+(N−n)/N =(1−n/N) = fpc ‼ It reflects the fact that sampling WOR from a finite population reduces uncertainty from WR case‼ As n grows, the pool of unknown units shrinks!--> so the variance of sample mean decrease across repeated samples!
 ----------------------------------------------------
 BESSEL’S CORRECTION
-In sample variance    s² =  ∑ (y_i – y_bar)² / (n-1)
+In sample variance    s² = ∑(y_i – y_bar)²/(n-1)
 Bessel’s correction = adjustment of using (n – 1) instead of n
-(n – 1) rather than n : because the sample mean is computed from the same data. Once the mean is fixed, the data points are no longer all “free” to vary independently: knowing n – 1 values automatically “forced” the last one! (degrees of freedom theory) 
--->  variability measured from the sample tends to be too small if we divide by n. 
+(n–1) rather than n: because the sample mean is computed from the same data! Once the mean is fixed, the data points are no longer all “free” to vary independently: knowing n–1 values automatically “forced” the last one! (degrees of freedom theory) 
+-->  variability measured from the sample would be too small if we divided by n! 
 ------------------------------
 SRS
-in SRS, each unit inclusion probability = n / N 
-PROS: --> The sample is self-weighting w_i = N / n (same for all units = self-weighting design)
-- simple and transparent
-- serves as a benchmark for other designs!
-- unbiased estimators for means and totals    y_bar =  ∑(in S) y_i /n ,  T_hat = N*y_bar,  t = ∑(in S) y_i
-- Variance estimation is straightforward
- WR (infinite population): Var(y_bar) = s²/ n
- WOR (fpc): Var(y_bar) = (s²/ n) (1 − n / N)
- WR (infinite population): Var(t) = N² Var(y_bar)
- WOR (fpc): Var(t) = N² Var(y_bar)  
+in SRS, each unit inclusion probability = n/N 
+PROS:--> The sample is self-weighting w_i = N/n (same for all units=self-weighting design)
+-simple and transparent
+-serves as a benchmark for other designs!
+-unbiased estimators for means and totals!  y_bar=∑(in S) y_i /n,   t_hat = N*y_bar,  t = ∑(in S)y_i
+-Variance estimation is straightforward
+ WR: Var(y_bar) = s²/n
+ WOR: Var(y_bar) = (s²/n) (1−n/N)
+ WR: Var(t) = N² *Var(y_bar)
+ WOR: Var(t) = N² *Var(y_bar)  
 CONS
-- requires a complete and accurate sampling frame
-- costly for large or geographically dispersed populations
-- does not exploit auxiliary information, resulting in higher variance!!!
+-requires complete and accurate sampling frame
+-costly for large or geographically dispersed populations
+-does not exploit auxiliary information, resulting in higher variance!!!
 ----------------------------------------
 SYS
 In SYS, there is a random start where units are selected at a fixed interval along an ordered list.
 Sampling interval is k = N/n (it draws n units from a population of size N). Then, we choose a random start between 1 and k, then select every k-th unit
 PROS:
-- If the list is RANDOMLY ORDERED with respect to the study variable Y --> SYS behaves similarly to SRS and ensures good spread over the list
-- If the list has a MEANINGFUL ORDER (geographic order, sorted by size, etc.) --> SYS induces implicit STRATIFICATION, often reducing variance by guaranteeing representation  -->  more precise than SRS‼
+-if list is RANDOMLY ORDERED with respect to the study variable Y--> SYS behaves similarly to SRS and ensures good spread over the list
+-if list has a MEANINGFUL ORDER BETTER NOT MONOTONE(geographic order, sorted by size, etc.)--> SYS induces implicit STRATIFICATION, often reducing variance by guaranteeing representation--> more precise than SRS‼
 CONS:
-- Can be biased if there is HIDDEN PERIODIC PATTERN THAT MATCHES THE INTERVAL K --> systematically large or small variance
-- In addition… A monotone trend in the list can also lead to over- or under-estimation, even with random start!
-- Variance estimation is not easy as SRS
+-can be biased if there is HIDDEN PERIODIC PATTERN THAT MATCHES THE INTERVAL K--> systematically larger or smaller variance
+-in addition… A monotone trend in the list lead to a general over or under estimation, even with random start!
+-Variance estimation is not easy as SRS
 ------------------------------------------------
 STS 
-In STS, population is divided into non-overlapping strata. Independent samples are drawn within each stratum. Allocation can be proportional or not.
-The inclusion probability in stratum h =  n_h / N_h
-The weight is the inverse:   w_h = N_h / n_h
+In STS, population is divided into non-overlapping strata, independent samples are drawn within each stratum, allocation can be proportional or not.
+inclusion probability in stratum pi_h= n_h/N_h      weight is the inverse:   w_h= N_h/n_h
 BUT‼ :
 -	in proportional alloc: every sampled unit represents the same number of pop units (=self-weighting)
 -	in Non-proportional alloc: (Neyman or Optimal): weights differ by stratum! 
-  PROS:
-- STS really improves precision, when within-stratum variability is substantially lower ≪ than overall-population variability‼
-- guarantees representation of all key subpopulations‼
+PROS:
+- really improves precision when within-stratum variability is substantially lower ≪ than overall population variability‼
+- STS guarantees representation of all key subpopulations‼
 - allows for stratum-specific estimates‼
 CONS:
-- if stratification chosen is weakly informative or unrelated to the study variable Y --> STS offers no efficiency gains over SRS and in case of non-PPS may even lead to higher variance than SRS
+- if stratification chosen is weakly informative or unrelated to the study variable Y--> STS offers no efficiency gains over SRS and in case of non-PPS may even lead to higher variance than SRS
 - requires information to define strata
 - more complex design and weighting
 
 CHOOSE n_h EFFICIENTLY (STS)
-“Efficiency” = MINIMIZING THE VARIANCE of the estimator, given a fixed n (usually because of a fixed budget)
-1)	PROPORTIONAL ALLOCATION            n_h = n (N_h / N)
-Each stratum receives a sampling fraction that is proportional to its size. 
-(If a stratum contains 30% of the population → it receives 30% of the sample)
-(In practice, the within-stratum variances sigma_h are not known a priori and are therefore replaced by preliminary estimates obtained from past surveys, theory background, literature, etc.)
-PRO: It is a simple and intuitive approach, “ok” when strata have similar variability
-LIMIT: It does not account for neither differences in variability across strata, nor costs
-2)	NEYMAN ALLOCATION      n_h = n [(N_h sigma_h) / ∑ N_h sigma_h]
+“Efficiency” = MINIMIZING THE VARIANCE of the estimator, given a fixed n (usually because of fixed budget)
+1) PROPORTIONAL ALLOCATION            n_h = n (N_h/N)
+Each stratum has sampling fraction proportional to its size (stratum with 30% of the population --> receives 30% of the sample)
+(in practice, the within-stratum variances sigma_h are not known a priori and are therefore replaced by preliminary estimates obtained from past surveys, theory background, literature, etc.)
+PRO: simple and intuitive approach, “ok” when strata have similar variability
+LIMIT: does not account for variability and costs across strata
+2) NEYMAN ALLOCATION      n_h = n [(N_h sigma_h) / ∑ N_h sigma_h]
 More sample is allocated to strata with higher variability, because:
-•	highly variable strata contribute more to the total variance
---> 	this allocation minimizes the variance of the estimator, given a fixed total sample size and equal costs per unit, but does not account for different costs
---> 	(in practice, the within-stratum variances sigma_h are not known a priori and are therefore replaced by preliminary estimates obtained from past surveys, theory background, literature, etc.)
-3)	OPTIMAL ALLOCATION WITH UNEQUAL COSTS ‼
-n_h = n  [(N_h sigma_h / √c_h) / ∑ (N sigma / √c)]
+highly variable strata contribute more to the total variance!!
+--> minimizes the variance of the estimator, given a fixed total sample size and equal costs per unit (does not account for different costs)
+--> (in practice, the within-stratum variances sigma_h are not known a priori and are therefore replaced by preliminary estimates obtained from past surveys, theory background, literature, etc.)
+3) OPTIMAL ALLOCATION WITH UNEQUAL COSTS ‼
+n_h = n* [(N_h*sigma_h /√c_h) / ∑(N*sigma / √c)]
 This allocation balances 2 factors: Variability of the stratum and Cost of sampling
--->  More sample is allocated to strata that are: Highly variable and Less expensive to sample
-4)	EQUAL ALLOCATION          n_h = n / H  for all strata
+--> More sample is allocated to strata that are: Highly variable and Less expensive to sample
+4) EQUAL ALLOCATION          n_h = n / H  for all strata
 PROS: very simple as each stratum receives the same sample size. It is good when Strata are very similar, and the main goal is comparisons between strata, not estimation of population totals or means
-LIMITS: not variance-optimal, it ignores differences in stratum sizes and variability and costs
+LIMITS: it ignores differences in stratum sizes, variability and costs
 --------------------------------------------
 CS
 in CS, population is divided into clusters, we randomly select only some clusters, then observe all or some units within those clusters. Clusters are often natural groups (households, classrooms, businesses, etc)
-PROS: reduce costs and useful when a “sampling frame” of individual elements is not available but a frame of clusters is‼
-CONS : 
--->  CS typically has larger variance > than SRS because units within clusters are similar‼
-Var(y_bar_CS) = (σ² / n) [ 1 + (m − 1) ρ ]    (m=average cluster side)
-The factor 1 + (m − 1)ρ is the DEFF due to clustering‼ It shows that the loss of efficiency in CS depends on both the intra-cluster correlation and the average cluster size, and it formally demonstrates, why clustering typically increases variance relative to SRS‼
---> In addition, in EP, if clusters vary substantially in size M_j, increases the variance of estimators, even when estimation is unbiased and correctly weighted.
--->  In CS, because the independent pieces of information arise from clusters rather than from individual obs, inference must be based on nc, not on n. As a result, CIs and hypothesis tests rely on a t-distrib with df based of nc‼
+PROS: reduce costs and useful when “sampling frame” of individual elements is not available but a frame of clusters is‼
+CONS: 
+--> CS typically has larger variance than SRS because units within clusters are similar‼
+Var(y_bar_CS) = (sigma² /n)*[1 + (m−1)*rho]    (m= average cluster side)
+[1 + (m−1)*rho] = the DEFF due to clustering‼ shows that the loss of efficiency in CS depends on both the intra-cluster correlation and the average cluster size, so it formally demonstrates, why clustering typically increases variance relative to SRS‼
+--> in EP-CS, if clusters vary substantially in size M_j, increases the variance of estimators, even when estimation is unbiased and correctly weighted.
+--> in CS, because the independent pieces of information arise from clusters rather than from individual obs, inference must be based on nc, not on n. As a result, CIs and hypothesis tests rely on a t-distrib with df based of nc‼
 
-Clusters can be selected with: EP or PPS
--->  EP, if clusters vary substantially in size M_j, increases the variance of estimators, even when estimation is unbiased and correctly weighted‼
--->  PPS sampling selects clusters with probability proportional to size! Giving individuals more equal inclusion chances, improving efficiency!
+Clusters can be selected with EP or PPS
+--> EP, if clusters vary substantially in size M_j, increases the variance of estimators, even when estimation is unbiased and correctly weighted‼
+--> PPS sampling selects clusters with probability proportional to size! Giving individuals more equal inclusion chances, improving efficiency!
 
 PPS Sampling
-In unequal probability sampling, often implemented in CS context of multistage complex surveys...clusters are selected with PPS measure. 
-“size” does not refer to physical size, but to an auxiliary variable correlated with the study variable y (e.g. number of households, employees, students, sales, land area) ‼ Sampling weights are defined as the inverse of the inclusion probabilities.
-PPS WR: a PSU can be selected more than once, typically uses the Hansen–Hurwitz estimator, variance estimate is simpler to calculate in WR (software default is WR typically)
-PPS WOR: a PSU can be selected at most once, Inclusion probabilities differ from selection probabilities, requires 1st- , 2nd- n-order inclusion probabilities‼ Estimation typically uses the Horvitz–Thompson estimator and Variance estimation is more complex (usually: Sen–Yates–Grundy)
-
-PROS: improves efficiency when the size measure is correlated with y, is particularly effective for skewed populations, and reduces the variance of total estimates, preventing under-sampling of large PSUs, in addition: facilitates self-weighting designs, widely used in complex survey 
---> 	In 2S- PPS- CS : sampling weight = inverse inclusion probab :   w_ij =  1 / pi_i * pi_j|i 
-CONS:  need reliable auxiliary size measures, complex estimation formulas variance WOR, and sensitivity to errors in the size measures.
+In unequal probability sampling, often implemented in CS multistage complex surveys...often clusters are selected with PPS 
+“size” does not refer to physical size!! but to an auxiliary variable correlated with the study variable y‼ with sampling weights = inverse of the inclusion probabilities
+PROS: improves efficiency when the size measure is correlated with y, is particularly effective for skewed populations, 
+reduces the variance of total estimates, preventing undersampling of large PSUs, in addition: facilitates self-weighting designs, widely used in complex survey 
+--> In 2S- PPS- CS : sampling weight = inverse inclusion probab :   w_ij =  1 / pi_i * pi_j|i 
+CONS: need reliable auxiliary size measures, has complex estimation formulas variance WOR, and sensitivity to errors in the size measures!
+  
+- PPS WR: a PSU can be selected more than once, uses the Hansen–Hurwitz estimator, variance estimate is simpler to calculate in WR (software default is WR typically)
+- PPS WOR: a PSU can be selected at most once, inclusion probabilities differ from selection probabilities,
+requires 1-, 2- n-order inclusion probabilities‼ Estimation typically uses the Horvitz–Thompson estimator and Variance estimation is more complex (Sen–Yates–Grundy)
+--Selection probability (ψ_i)= prob that i is selected in a single draw: ψ_i = M_i/ Σ M_j
+--Inclusion probability (π_i)= prob that i appears at least once in the final sample
+WR: π_i = 1−(1 − ψ_i)ⁿ
+WOR: π_i ≠ ψ_i and must be computed from the full sampling design
 ---------------------------
-- 1S- CS: we select a sample of clusters and include ALL those units  in the sample
+- 1S- CS: we select a sample of clusters and include ALL those units in the sample
 - 2S- CS: 
-Stage 1: select clusters = PSUs   (Primary Sampling Units)
-Stage 2: within PSUs, select units = SSUs  (Secondary Sampling Units)
+Stage 1: select clusters = PSUs (Primary Sampling Units)
+Stage 2: within PSUs, select units = SSUs (Secondary Sampling Units)
 There can be additional stages (e.g. select districts, then schools within districts, then students within schools for a 3S- design)!
-The sampling weight =    w_i = 1 / pi_i = (1 / pi_j1) · (1 / pi_i|j2)   This tells: how many units in the pop that sampled unit represents!
+The sampling weight = w_i = 1/pi_i=(1/pi_j1)*(1 / pi_i|j2) This tells: how many units in the pop that sampled unit represents!
   
 PROS  
 - more cost-efficient than 1S- CS 
 - reduces respondent burden within clusters 
-- flexible design adaptable to field constraints
+- flexible design adaptable
 CONS  
-- more complex weighting and variance estimation 
-- precision depends on both number of clusters and subsampling rates 
-- DEFF can be substantial
+- more complex weighting and variance
+- precision depends on both number of clusters and subsampling rates!!
+- DEFF is substantial
 
 -------------------------
 2P- (Double Sampling)
-The idea is to measure x on a large phase-1 sample and y only on a smaller phase-2 subsample, while still using phase-1 information in estimation!
-Overall inclusion probability:   pi_i = pi_i(1) · pi_i(2|1)
-Sampling weight:      w_i = 1 / pi_i
-If both phases are SRS:      pi_i = n² / N   (= to a single SRS of size n²)
-Unlike 2S- CS, the sampling units are the same in both phases. 
-There is no hierarchical structure (no clusters and elements)!
-The distinction between phases refers to when and what is measured, not to different types of sampling units.
+The idea is measure x on a large phase-1 sample and y only on a smaller phase-2 subsample, while still using phase-1 information in estimation!
+Overall inclusion probability:  pi_i = pi_i(1)* pi_i(2|1)   Sampling weight:   w_i = 1/pi_i
+if both phases are SRS: pi_i = n²/N  (= to a single SRS of size n²)
+UNLIKE 2S- CS, the sampling units are the same in both phases!!! --> there is no hierarchical structure (no clusters and elements)!
 PROS:
-- helpful: when the study variable y is expensive or difficult to measure, but : auxiliary variables x are cheap
+- helpful: when the study variable y is expensive or difficult to measure, BUT auxiliary variables x are cheap
 - can be exploited to improve efficiency when auxiliar x is strong correlated with y ‼
 - allows use of ratio or regression estimators
 CONS:
 - more complex design and analysis
 - requires modeling assumptions
 - risk of inefficiency if correlation is weak!
+----
+PPS vs Double sampling
+both, make use of an auxiliary variable, they differ fundamentally in purpose, structure, and timing:
+- PPS: auxiliary variable ("size" measure) is used at the selection stage to assign unequal inclusion probabilities!!!Units with larger values of the size measure have higher probabilities of being selected. 
+PPS is commonly used in cluster multistage surveys, where PSUs are selected with probability proportional to a variable correlated with the study variable. 
+main objective of PPS = increase efficiency and reduce variance by preventing the undersampling of large units
+- 2P: by contrast, is a data-collection strategy rather than a selection rule. 
+phase1, a relatively large probability sample is drawn and an inexpensive auxiliary variable x is measured 
+phase2, a subsample of the same units is selected and the variable of interest y, which is costly or difficult to measure, is observed!!
+The auxiliary information collected in phase-1 is then used to improve estimation (through ratio or regression estimators).
+There is no hierarchical structure (no PSUs and SSUs), and the population units are identical in both phases
+In short: PPS determines who is more likely to enter the sample, while 2P determines who is measured more intensively
 --------------------------- 
 2P– STRAT 
 - in 2P- STS, phase-1 information is not only auxiliary for estimation — it is used to define strata for phase-2 sampling (strata are unknown before phase-1, stratum membership is revealed by measuring x)‼
