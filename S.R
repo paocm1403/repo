@@ -205,119 +205,126 @@ There is no hierarchical structure (no PSUs and SSUs), and the population units 
 In short: PPS determines who is more likely to enter the sample, while 2P determines who is measured more intensively
 --------------------------- 
 2P– STRAT 
-- in 2P- STS, phase-1 information is not only auxiliary for estimation — it is used to define strata for phase-2 sampling (strata are unknown before phase-1, stratum membership is revealed by measuring x)‼
-Unlike basic 2P: phase-2 pi_i differ by stratum and weights are not constant, even if phase-1 is SRS
-- Estimation proceeds as in STS with appropriate combined weights (reverse of pi_i) = w_i= (N/n1) * (n_h/m_h)
+Example: survey aimed at estimating true annual health expenditures of households, (y is expensive and difficult to measure)
+phase-1, a large SRS of households is drawn and an inexpensive auxiliary variable x, such as estimated health expenditures obtained from administrative records, is collected for all sampled units. At this stage, no strata exist!!
+After phase-1, households are classified into strata (for example, low, medium, and high expected health spending) based on x, thus, stratum membership is unknown before phase-1!!
+phase-2, a STS subsample is selected from the phase-1 sample,here oversampling households with high expenditure stratum if variability and policy relevance are greater!! 
+Y (true health expenditures) is then measured only for this phase-2 subsample!! 
+Because phase-2 inclusion probabilities differ across strata, final sampling weights are unequal, even though phase-1 sampling is SRS. 
+Estimation proceeds as in standard STS using combined 2P- weights, yielding substantial efficiency gains when the auxiliary variable is strongly correlated with the study variable and within-stratum variance is much smaller than overall variance.
+
+So, in 2P- STS, phase-1 information is not only auxiliary for estimation, is also used to define strata for phase-2 sampling (strata are unknown before phase-1, stratum membership is revealed measuring x)‼
+Unlike basic 2P, phase-2 pi_i differ by stratum and weights are not constant, even if phase-1 is SRS
+Estimation proceeds as in STS with appropriate combined weights (reverse of pi_i) = w_i= (N/n1) * (n_h/m_h)
 VERY BENEFICIAL WHEN:
 - x is strongly correlated with y
-- variance (y_within-stratum) ≪ variance (y_overall)
+- variance(y_within-stratum) is much SMALLER than variance(y_overall)
 - we can allocate m_h efficiently (as in Neyman allocation) 
- -->  so,  variance become ≪ than 1P- SRS and of 2P-nonSTS
-RISK TO BE AWARE OF: rare or important groups can be oversampled!
+-->  so,  variance become ≪ than 1P- SRS and of 2P-nonSTS
+THING TO BE AWARE OF: rare or important groups can be oversampled!
 ------------
 STS – CS (Stratified Cluster Sampling)
-In STS-CS the pop is first divided into strata, and then clusters (PSUs) are selected within each stratum, often followed by sampling units inside the selected clusters.
-STS improves precision, while CS reduces survey costs but introduces within-cluster correlation that affects variance estimation and degrees of freedom.
-- Clustering usually increases variance due to within-cluster correlation.
-- DEFF often approximated =    1 + (m − 1)ρ
-Where m= number of units per PSU and ρ=ICC
-- With few PSUs, degrees of freedom are small:
---	use t distributions for CI
---	df approxim= number of PSUs − number of strata
-- RISK TO BE AWARE OF : when PSUs is a small number e.g. < 30  -->  variance estimates are unstable and normal approximations are unreliable, requiring the use of t distributions and careful interpretations!
+
+Example: a national household survey to estimate average household consumption. To improve precision, the population is first stratified by region (for example, North, Center, and South), 
+creating strata that are internally more homogeneous. Within each stratum, clusters such as villages or census blocks are selected as PSUs typically using SRS or PPS, 
+and then a fixed number m of households is sampled within each selected cluster.
+So, In STS-CS the pop is first divided into strata, and then clusters (PSUs) are selected within each stratum, often followed by sampling units inside the selected clusters.
+STS improves precision, while CS reduces survey costs BUT introduces within-cluster correlation that affects variance estimation and degrees of freedom.
+- CS usually increases variance due to within-cluster correlation.
+- CS DEFF often approximated = 1+(m −1)*rho   where m=number of units per PSU and rho=ICC
+- with few PSUs, degrees of freedom are small: SO, we use t distributions for CI AND df approxim= number of PSUs − number of strata
+RISK TO BE AWARE OF: when PSUs is a small number e.g. < 30--> variance estimates are unstable and normal approximations are unreliable, requiring the use of t distributions and careful interpretations!
 -----------------------------------  
 COMPLEX SAMPLING
 Complex sampling designs combine STS, CS, and unequal probabilities across multiple stages of selection.
-- Second-stage fpc should be included if sampling fractions are non-negligible.
-- If second-stage fractions are small, WR approximation is often acceptable.
-PROS: are highly flexible and cost-effective for large-scale surveys, enable nationwide or extensive data collection, and are standard practice in official statistics.
+PROS: are highly flexible and cost-effective for large-scale surveys, enable extensive data collection... are standard practice in official statistics
 CONS: complex to design and implement, require specialized softwares, and carry a risk of incorrect inference if DEFFs are ignored
 
 WEIGHTS ALONE ARE NOT ENOUGH
-- sampling weights alone are sufficient for correct point estimates, but not for correct variance estimation‼ Ignoring the full survey design—especially CS —leads to underestimated s.e. with overly optimistic inference!
+- sampling weights alone are sufficient for correct point estimates, but not for correct variance estimation‼ 
+Ignoring the full survey design—especially CS, leads to underestimated s.e. with overly optimistic inference:
 - weighted means via weighted.mean() give point estimates but incorrect SEs.
 - correct variance requires full design info: strata, PSUs, weights, fpc.
 
 Software behavior (survey package)
-- Defaults to WR variance unless fpc provided‼
-- Linearizes ratio and regression estimators automatically.
-- Can report design effect (deff = TRUE).
--	deff > 1 → variance inflation (clustering)
--	deff < 1 → variance reduction (stratification)
+- defaults to WR variance unless fpc provided‼
+- linearizes ratio and regression estimators automatically
+- can report design effect (deff = TRUE).
+-	deff > 1 --> variance inflation (CS)
+-	deff < 1--> variance reduction (STS)
 CI
-- Large samples: estimate ± z · SE
-- Few PSUs: use t(df) with   df = PSUs − strata
-- In R, we must :  check degf() and specify df explicitly if needed
-Nonresponse and calibration = Weight adjustments for nonresponse or post-stratification may increase or decrease variance
+- large samples: estimate ±z*SE
+- few PSUs: use t(df) with df = PSUs − strata
+- in R, we must: check degf() and specify df explicitly if needed
+Nonresponse and calibration = weight adjustments for nonresponse or post-stratification may increase or decrease variance!!
 
 SAMPLE SIZE DETERMINATION (n)
-Choosing n = depends on desired precision for the estimates and our resource constraints. 
-1. decide on the parameter of interest (mean, proportion, total, etc.) and the precision measure (e.g. margin of error e for CI, or target variance)
-2. choose a CI level (which gives a z-value or t for the CI)
-3. use a formula relating sample size n to the precision target
+Choosing n = depends on desired precision for the estimates and our resource constraints! 
+1. we decide the PARAMETER (mean, proportion, total, etc.) and precision measure (e.g. margin of error e for CI or target variance)
+2. we choose a CI level (which gives a z-value or t for the CI)
+3. use a FORMULA relating sample size n to the precision target
 4. solve for n, then adjust for population size (FPC) if necessary and consider cost/trade-offs
 Practically:
--	Proportions: n0 = (z / e)² p(1 − p), we use p = 0.5 if unknown, to be conservative!
+-	Proportions: n0 = (z/e)²* p(1−p), we use p=0.5 if unknown, to be conservative!
 -	Usually are used WOR formula to calculate n0 but then is important to apply FPC factor and calculate final n‼
--	Inflate by DEFF for clustering or unequal weighting:
-  Example:     n_design = n_SRS · DEFF
-STS may reduce variance, but good practise is to be conservative and not reduce n in advance.
--	We use pilot data or prior studies to guess p in proportions cases
--	sigma is usually unknown and must be guessed from past studies, administrative data, pilot sample, etc  (in pilot sample sigma is often replaced by sample s)
+-	Inflate by DEFF for clustering or unequal weighting:  Example:  n_design = n_SRS * DEFF
+STS may reduce variance, but good practise is to be conservative and not reduce n in advance
+-	we use pilot data or prior studies to guess p in proportions cases
+-	sigma is usually unknown and must be guessed from past studies, administrative data, pilot sample, etc (in pilot sample sigma is often replaced by sample s)
 -	a rough rule is sigma = range / 4 (for approximately normal data)
 -	for small pilot samples, a t critical value instead of z
--	AFTER n formulas, the drawn sample MUST BE INFLATED to account for anticipated nonresponse.
-required draws = n / response rate.
-Example: need 500 responses, expect 80% response → draw about 625 units.
--	Sometimes CV error is specified instead of a margin of error.
--	In STS, formulas using stratum variances (Cochran) can be used to solve for n iteratively. These require assumptions or pilot estimates of sigma_h
+
+-	AFTER n formulas, the drawn sample MUST BE INFLATED to account for ANTICIPATED NONRESPONSES!!
+required draws = n / response rate
+Example: need 500 responses, expect 80% response --> draw about 625 units
+-	sometimes CV error is specified instead of a margin of error
+-	in STS, formulas using stratum variances COCHRAN can be used to solve for n iteratively. These require assumptions or pilot estimates of sigma_h
 --------------------------------------------------
 Estimating Means vs Proportions
 Means
-- Estimating averages is easier when the population values are similar to each other.
-- Large dispersion in values implies more uncertainty and therefore larger samples.
-- Prior information (past surveys, pilot studies) is crucial to judge how variable the population is.
+- estimating averages is easier when the population values are similar to each other
+- large dispersion in values implies more uncertainty and therefore larger samples
+- prior information (past surveys, pilot studies) is crucial to judge how variable the population is
 Proportions 
-A proportion can be seen as the mean of a binary (0/1) variable, where Yi=1 if the unit has the characteristic of interest and Yi=0 otherwise
-Var(Y)= p(1 − p), which is maximized at p = 0.5
-If p_hat is the sample proportion:     Var(p_hat) = [ p(1 − p) / n ] (1 − n / N)
-- Proportions are hardest to estimate when the population is evenly split (around 50%).
-- Rare characteristics (very small or very large proportions) generally need smaller samples for the same precision.
-- When the true proportion is unknown, planners assume the most conservative case p=0.5
+A proportion can be seen as the mean of a binary (0/1) variable, Yi=1 if the unit has the characteristic and Yi=0 otherwise
+Var(Y)= p(1−p), which is maximized at p = 0.5
+If p_hat is the sample proportion:  Var(p_hat) = [p(1−p)/n]*(1−n/N)
+- proportions are hardest to estimate when the population is evenly split (around 50%)
+- rare characteristics (very small or very large p) need smaller samples to obtain the same absolute margin of error
+- when the true proportion is unknown, planners assume the most conservative case p=0.5
 ------------------------------------
-Ratio Estimator
-Auxiliary variable x_i correlated with y_i, and X = ∑ x_i is known 
-If y =approx= B x (relationship roughly proportional and passing through the origin)
---> it is more efficient to estimate Y using the known X rather than relying only on the mean y_bar ‼
+Ratio Estimator (used to estimate both population totals and means)
+When auxiliary variable x correlated with y, we could assume y=Bx (relationship roughly proportional and passing through the origin)
+where B is a parameter estimated as  B= ∑y_i/ ∑x_i 
 PROS:
+- it is more efficient to estimate totals and means rather than relying only on y_bar ‼
 If x and y are positively correlated and the relationship is close to proportional:
-- variance is reduced by factor (1-rho)^2, If rho is close to 1 → large gain
+- variance is reduced by factor (1-rho)^2, if rho is close to 1 --> large gain
 - estimates are “anchored” to the known X, 
-- under- or over-representation of large-x units in the sample, automatically corrected (ratio!)
+- under or over representation of large-x units in the sample are automatically corrected (ratio property!)
 BIAS‼
-- ratio estimator is not exactly unbiased, due to the nonlinearity of the ratio.
-The bias is typically O(1 / n) and negligible for moderate or large samples. BUT, If the model y = Bx holds exactly, the estimator is unbiased!
-- If rho near 0 --> little or no gain (ratio may even be worse)
+- Ratio Estimator is not exactly unbiased, due to the nonlinearity of the ratio!!
+The bias is typically O(1/n) and negligible in large samples, BUT, If the model y=Bx holds exactly, the estimator is unbiased!
+- if rho near 0 --> little or no gain (ratio may even be worse than simple y_bar)
 --------------------------------------------------
 Regression Estimator
 Here the auxiliary variable x_i is linearly related to y_i, but the relationship does not necessarily pass through the origin (Ratio Estimator case)
-It generalizes ratio estimation and can substantially reduce variance when ρ² is high.
------------------------------------------------
+It generalizes Ratio Estimator and can substantially reduce variance when (rho^2) is high
 MULTIPLE AUXILIARY VARIABLES
---> lead to the Generalized regression estimator (GREG)
---> can be applied under SRS, STS, CS using appropriate weights
+--> lead to Generalized regression estimator (GREG)
+--> can be applied under SRS, STS, CS.... using appropriate weights
 --> in STS: separate regression (by stratum) may further improve efficiency if relationships differ across strata‼
 PROS:
 The regression estimator is approximately unbiased:
-- if b is estimated, bias is of order O(1 / n) and negligible for moderate n.
+- if b is estimated, bias is of order O(1/n) and negligible for moderate n
 - if beta is known in advance, the estimator is exactly unbiased and more efficient‼
 
 ---------------
 Sampling Weights
-The sampling weight of unit i is the number of population units it represents‼ It is the inverse of the inclusion probability:  w_i = 1 / pi_i, where  pi_i= prob(unit i is selected)
+The sampling weight of unit i is the number of population units it represents‼ It is the inverse of the inclusion probability: w_i = 1/pi_i, where pi_i=prob(unit i is selected)
 weights serve two roles:
-1. point estimation: expand the sample to estimate totals, means, and proportions.
-Example: Horvitz–Thompson estimator of a total = T_hat = ∑ {in S} w_i y_i
+1. point estimation: expand the sample to estimate totals, means, and proportions
+Example: Horvitz–Thompson estimator of a total = T_hat = ∑{in S}w_i*y_i
 2. adjustment: weights are MODIFIED for unequal selection probabilities and compensate for nonresponse or known population totals 
 calibration  -->  The resulting analysis weights usually should sum to N
 Sampling weights correct point estimates  BUT, correct variance estimation additionally requires full knowledge of DEFFs and fpc ‼
@@ -326,14 +333,14 @@ Sampling weights correct point estimates  BUT, correct variance estimation addit
   
 DESIGN WEIGHTS
 Weights implied by the sampling design (formulas are always the inverse of inclusion prob pi_i):
-- SRS and SYS  = N / n 
-- STS: (for each i in stratum h)    = N_h / n_h   
-- 1S- CS (EP)   = Nc / nc   
--	2S- CS (EP)    = (Nc / nc) * (Mi / mi)
--	STS-CS: =   (Nc_h / nc_h) * (M_hi) / m_hi)
--	2P- STS:  = (N/n1) * (n1_h/n2_h)
+- SRS and SYS  = N/n
+- STS: (for each i in stratum h)= N_h / n_h   
+- 1S- CS (EP)= Nc / nc   
+-	2S- CS (EP)= (Nc / nc) * (Mi / mi)
+-	STS-CS = (Nc_h / nc_h) * (M_hi) / m_hi)
+-	2P- STS= (N/n1) * (n1_h/n2_h)
 -	2P – STS- CS  = (N_h/nc_h)*(M_hi/m_hi)
-- multi-stage cluster sampling:    w_i = (1 / pi_j(1) )*(1 / pi_i|j (2))
+- multi-stage cluster sampling  w_i = (1/ pi_j(1))*(1/ pi_i|j(2))
 - PPS: units sampled with higher probability receive smaller weights. PPS does not produce a self-weighting design, but it does only if the subsampling within selected PSUs is proportional to the size measure used for PPS‼
 - If all pi_i are equal, the design is self-weighting
 
@@ -344,10 +351,10 @@ unweighted means = weighted means‼
 Ignoring weights causes biased estimates toward over-represented units‼
 
 Using weights in estimation
-- Total: T_hat = ∑ w_i  y_i
-- Mean: mu_hat = (∑ w_i y_i) / (∑ w_i)
+- Total: T_hat = ∑ w_i*y_i
+- Mean: mu_hat = (∑ w_i*y_i) / (∑ w_i)
 - Proportion: is a weighted mean of a 0/1 indicator
-- Ratio: (∑ w_i y_i) / (∑ w_i x_i)
+- Ratio: (∑ w_i*y_i) / (∑ w_i*x_i)
 
 ---------------------
 Formulas: mean, total , variance of the mean
@@ -355,24 +362,24 @@ Formulas: mean, total , variance of the mean
 SRS (WOR)
 y_bar = (∑y_i) / n
 T_hat = N * y_bar
-Var(y_bar_hat) = (1 − n/N)* (s² / n)
+Var(y_bar_hat) = (1 − n/N)* (s²/n)
 
 SYS (WOR) Approximations of SRS!
 y_bar = (∑ y_i) / n
 T_hat = N * y_bar
-Var(y_bar_hat) = (1 − n/N) * (s² / n)
+Var(y_bar_hat) = (1 − n/N) * (s²/n)
 
-STS (SRSWOR at each stratum)  h = 1,…,H  where W_h = N_h / N
+STS (SRSWOR at each stratum)  h = 1,...,H  where W_h = N_h/N
 y_bar = ∑ W_h * y_bar_h
 T_hat = ∑ N_h * y_bar_h
-Var(y_bar_hat) = ∑ W²_h * (1 − n_h/N_h) *(s²_h/n_h)
+Var(y_bar_hat) = ∑ W²_h*(1 − n_h/N_h) *(s²_h/n_h)
 
 1S–CS (EP) (WOR) 
 Nc = # of clusters in N, nc = # of clusters sampled, 
 t_i = ∑ y_ij ,   t_bar = ∑ t_i /nc    s²_t = (1/(nc−1)) ∑(t_i −t_bar)²
-T_hat = (Nc / nc)* ∑ t_i
-y_bar = T_hat / N
-Var(y_bar_hat) = (1/N²) * Nc² * (1 − nc/Nc) *(s²_t /nc)
+T_hat = (Nc/nc)* ∑ t_i
+y_bar = T_hat/N
+Var(y_bar_hat) = (1/N²)*Nc²*(1 − nc/Nc)*(s²_t /nc)
 
 2S–CS (EP) (WOR) 
 M_i = SSU within cluster i,   m_i = SSU sampled,   y_bar_i = (∑ y_ij) / m_i
@@ -384,11 +391,11 @@ s²_r = (1/(nc−1)) ∑ M²_i (y_bar_i − y_bar_hat)²
 M_bar = ∑ M_i /nc
 
 2S–CS (PPS) (WOR) Notazione: pi_i= prob. inclusione cluster i,   pi_j|i = prob. SSU j given i
-pi_ij = pi_i  * pi_j|i 
-T_hat = ∑∑ y_ij / pi_ij  --->  Total (Horvitz–Thompson)   
+pi_ij = pi_i * pi_j|i 
+T_hat = ∑∑ y_ij / pi_ij  ---> Total (Horvitz–Thompson)   
 y_bar = ( ∑∑ y_ij / pi_ij )  / ( ∑∑ 1 / pi_ij )
 Var(y_bar_hat) = (1/ N_hat²) * (1/(nc(nc−1))) * ∑ (u_i - u_bar)²  --------> WR approximation of WOR
-where u_i= t_hat_i / pi_i,      u_bar = (1/nc) ∑ u_i
+where u_i= t_hat_i / pi_i,   u_bar = (1/nc) ∑ u_i
 
 2P – (SRS–SRS) Notazione: n₁ = fase 1, n₂ = fase 2
 y_bar = y_bar(2)
